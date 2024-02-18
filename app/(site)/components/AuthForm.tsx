@@ -92,8 +92,6 @@ function AuthForm() {
         }
 
         if (data?.ok && !data?.error) {
-          console.log(data);
-
           toast.success("Success");
         }
       })
