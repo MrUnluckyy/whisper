@@ -2,10 +2,10 @@ import getSession from "./getSession";
 
 const getUsers = async () => {
   const session = await getSession();
-  console.log("SESSION", session);
   if (!session?.user?.email) {
     return [];
   }
+  console.log("SESSION", session);
 
   try {
     const users = await prisma?.user.findMany({
@@ -19,11 +19,14 @@ const getUsers = async () => {
       },
     });
 
+    console.log("GET_USERS", users);
+
     if (!users?.length) {
       return [];
     }
     return users;
   } catch (error: any) {
+    console.log("INTERNAL_ERROR_GET_USERS", error);
     return [];
   }
 };
