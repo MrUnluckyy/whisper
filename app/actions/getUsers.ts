@@ -2,6 +2,7 @@ import getSession from "./getSession";
 
 const getUsers = async () => {
   const session = await getSession();
+  console.log(session);
   if (!session?.user?.email) {
     return [];
   }
