@@ -96,6 +96,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newConversation);
   } catch (error: any) {
+    console.log("INTERNAL_ERROR_CONVERSATIONS", error);
     return new NextResponse("Internal Error", {
       status: 500,
     });
