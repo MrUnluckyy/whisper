@@ -31,7 +31,6 @@ const Select: FC<SelectProps> = ({
           onChange={onChange}
           isMulti
           options={options}
-          menuPortalTarget={document.body}
           styles={{
             menuPortal: (base) => ({
               ...base,
