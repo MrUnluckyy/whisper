@@ -7,27 +7,43 @@ import axios from "axios";
 import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
 import useNotificationList from "@/app/hooks/useNotificationList";
+import { useSession } from "next-auth/react";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
 }
 const Body: FC<BodyProps> = ({ initialMessages }) => {
+  const session = useSession();
   const [messages, setMessages] = useState(initialMessages);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const { remove } = useNotificationList();
-
+  const { remove, set, notifications } = useNotificationList();
   const { conversationId } = useConversation();
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
 
+  console.log("wtf_1", notifications);
+
   useEffect(() => {
     pusherClient.subscribe(conversationId);
     bottomRef.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
-      axios.post(`/api/conversations/${conversationId}/seen`);
+      axios.post(`/api/conversations/${conversationId}/seen`).then(() => {
+        const hasSeen = (seenArray: FullMessageType["seen"]) => {
+          return !!seenArray.find(
+            (usr) => usr.email === session.data?.user?.email
+          );
+        };
+
+        messages.filter((msg) => {
+          if (hasSeen(msg.seen)) {
+            remove(msg.id);
+          }
+        });
+      });
+
       setMessages((current) => {
         if (find(current, { id: message.id })) {
           return current;
@@ -35,12 +51,8 @@ const Body: FC<BodyProps> = ({ initialMessages }) => {
 
         return [...current, message];
       });
+      remove(message.id);
 
-      messages.forEach((message) => {
-        if (message.seen) {
-          remove(message.id);
-        }
-      });
       bottomRef.current?.scrollIntoView();
     };
 

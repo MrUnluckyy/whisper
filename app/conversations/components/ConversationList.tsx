@@ -26,8 +26,6 @@ const ConversationList: FC<ConversationListProps> = ({
   const router = useRouter();
   const { conversationId, isOpen } = useConversation();
 
-  console.log("CONV_LIST_SESSION", session);
-
   const pusherKey = useMemo(() => {
     return session.data?.user?.email;
   }, [session.data?.user?.email]);

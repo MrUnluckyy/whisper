@@ -8,7 +8,7 @@ import SettingsModal from "./SettingsModal";
 import ThemeModal from "./ThemeModal";
 import { useSession } from "next-auth/react";
 import { pusherClient } from "@/app/libs/pusher";
-import { FullMessageType } from "@/app/types";
+import { FullConversationType, FullMessageType } from "@/app/types";
 import useNotificationList from "@/app/hooks/useNotificationList";
 
 interface DesktopSidebarProps {
@@ -32,8 +32,9 @@ const DesktopSidebar: FC<DesktopSidebarProps> = ({ currentUser }) => {
 
     pusherClient.subscribe(pusherKey);
 
-    const newHandler = (message: FullMessageType) => {
-      add(message.id);
+    const newHandler = (conversation: FullConversationType) => {
+      add(conversation.messages[conversation.messages.length - 1].id);
+
       const whistle = new Audio("/sounds/notification.mp3");
       if (!document.hasFocus()) {
         whistle.play();
