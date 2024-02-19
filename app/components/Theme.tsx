@@ -1,24 +1,37 @@
 "use client";
-import React, { useEffect } from "react";
-import { themeChange } from "theme-change";
+import React, { ChangeEvent, useContext } from "react";
+import { ThemeContext } from "./ThemeContext";
+import { ThemeType } from "../types";
 
 function Theme() {
-  useEffect(() => {
-    themeChange(false);
-  }, []);
+  const { changeTheme, theme } = useContext(ThemeContext);
 
-  const themes = ["light", "dark", "retro", "night", "coffee", "cmyk"];
+  const themes: ThemeType[] = [
+    "lofi",
+    "dim",
+    "night",
+    "coffee",
+    "cmyk",
+    "cyberpunk",
+  ];
+  const handleThemeChagne = (event: ChangeEvent<HTMLInputElement>) => {
+    if (changeTheme) {
+      changeTheme(event);
+    }
+  };
   return (
     <div className="p-4">
       <div className="join join-horizontal">
-        {themes.map((theme) => (
+        {themes.map((themeOption) => (
           <input
-            key={theme}
+            onChange={handleThemeChagne}
+            key={themeOption}
             type="radio"
             name="theme-buttons"
             className="btn theme-controller join-item capitalize"
-            aria-label={theme}
-            value={theme}
+            aria-label={themeOption}
+            value={themeOption}
+            checked={theme === themeOption}
           />
         ))}
       </div>

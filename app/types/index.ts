@@ -9,3 +9,11 @@ export type FullConversationType = Conversation & {
   users: User[];
   messages: FullMessageType[];
 };
+
+export type ThemeType =
+  | "lofi"
+  | "dim"
+  | "night"
+  | "coffee"
+  | "cmyk"
+  | "cyberpunk";
