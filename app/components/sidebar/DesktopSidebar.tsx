@@ -34,7 +34,7 @@ const DesktopSidebar: FC<DesktopSidebarProps> = ({ currentUser }) => {
 
     const newHandler = (message: FullMessageType) => {
       add(message.id);
-      const whistle = new Audio("/sounds/notification.wav");
+      const whistle = new Audio("/sounds/notification.mp3");
       if (!document.hasFocus()) {
         whistle.play();
       }
