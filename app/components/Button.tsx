@@ -19,13 +19,12 @@ const Button: FC<ButtonProps> = ({
   danger,
   disabled,
   children,
-  onClick,
 }) => {
   return (
     <button
       type={type}
       className={clsx(
-        "btn",
+        "btn btn-primary",
         disabled && "btn-disabled",
         fullWidth && "w-full",
         secondary ? "text-gray-900 btn-secondary" : "text-white",

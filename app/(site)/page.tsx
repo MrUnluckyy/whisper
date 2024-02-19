@@ -1,9 +1,10 @@
 import Image from "next/image";
 import AuthForm from "./components/AuthForm";
+import Theme from "../components/Theme";
 
 export default function Home() {
   return (
-    <div className="flex min-h-full flex-col justify-center py-12 sm:px-8 lg:px-8 bg-gray-100">
+    <div className="flex min-h-full flex-col justify-center py-12 sm:px-8 lg:px-8 bg-base-100">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Image
           src="/images/logo.png"
@@ -17,6 +18,9 @@ export default function Home() {
         </h2>
       </div>
       <AuthForm />
+      <div className="flex justify-center">
+        <Theme />
+      </div>
     </div>
   );
 }

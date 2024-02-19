@@ -10,6 +10,7 @@ import AuthSocialButton from "./AuthSocialButton";
 import { BsGoogle } from "react-icons/bs";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Theme from "@/app/components/Theme";
 
 type Variant = "LOGIN" | "REGISTER";
 

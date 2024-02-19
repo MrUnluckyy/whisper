@@ -12,7 +12,7 @@ const AuthSocialButton: FC<AuthSocialBUttonProps> = ({
   onClick,
 }) => {
   return (
-    <button type="button" onClick={onClick} className="btn flex-1">
+    <button type="button" onClick={onClick} className="btn btn-primary flex-1">
       <Icon />
     </button>
   );
