@@ -8,5 +8,9 @@ export default function ClientThemeWrapper({
   children: ReactNode;
 }) {
   const { theme } = useContext(ThemeContext);
-  return <div data-theme={theme}>{children}</div>;
+  return (
+    <div data-theme={theme} className="h-full">
+      {children}
+    </div>
+  );
 }
