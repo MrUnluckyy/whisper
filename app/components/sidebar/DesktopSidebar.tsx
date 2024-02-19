@@ -35,7 +35,9 @@ const DesktopSidebar: FC<DesktopSidebarProps> = ({ currentUser }) => {
     const newHandler = (message: FullMessageType) => {
       add(message.id);
       const whistle = new Audio("/sounds/notification.wav");
-      whistle.play();
+      if (!document.hasFocus()) {
+        whistle.play();
+      }
       document.title = "New Message";
     };
 
@@ -47,7 +49,6 @@ const DesktopSidebar: FC<DesktopSidebarProps> = ({ currentUser }) => {
     };
   }, [pusherKey, add]);
 
-  console.log("Notification", notifications);
   return (
     <>
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:w-20 lg:overflow-y-auto lg:bg-base-300 lg:pb-4 lg:flex lg:flex-col justify-between items-center border-r border-base-300">

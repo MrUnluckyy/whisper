@@ -24,11 +24,12 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
     .join(", ");
 
   const handleOpenModal = (image: string) => {
-    if (!image) return;
+    if (!image || isGif) return;
     const modalId = document.getElementById(image) as HTMLDialogElement;
     modalId.showModal();
   };
 
+  const isGif = data.image && data.image.indexOf("giphy.com") > 0;
   return (
     <>
       <div
@@ -46,12 +47,13 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
 
         {data.image ? (
           <>
-            <Image
+            <img
               src={data.image}
               alt=""
-              height="288"
-              width="288"
-              className="object-cover cursor-pointer hover:scale-105 transition translate rounded-lg mt-2"
+              className={clsx(
+                "object-cover rounded-lg mt-2 w-[288] h-[288]",
+                !isGif && "cursor-pointer hover:scale-105 transition translate"
+              )}
               onClick={() => handleOpenModal(data.image!)}
             />
             <ImageModal image={data.image} />
