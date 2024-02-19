@@ -84,11 +84,13 @@ const ConversationBox: FC<ConversationBoxProps> = ({ data, selected }) => {
           </div>
           <p
             className={clsx(
-              "truncate text-sm",
-              hasSeen ? "text-text-neutral" : "text-neutral font-bold"
+              "truncate text-sm font-light",
+              hasSeen ? "text-base-content" : "text-base-content font-bold"
             )}
           >
-            {lastMessageText}
+            {otherUser.email === lastMessage.sender.email
+              ? lastMessageText
+              : `You: ${lastMessageText}`}
           </p>
         </div>
       </div>
