@@ -88,7 +88,7 @@ const ConversationBox: FC<ConversationBoxProps> = ({ data, selected }) => {
               hasSeen ? "text-base-content" : "text-base-content font-bold"
             )}
           >
-            {otherUser.email === lastMessage.sender.email
+            {otherUser.email === lastMessage?.sender?.email!
               ? lastMessageText
               : `You: ${lastMessageText}`}
           </p>
