@@ -45,7 +45,7 @@ const DesktopSidebar: FC<DesktopSidebarProps> = ({ currentUser }) => {
       pusherClient.unsubscribe(pusherKey);
       pusherClient.unbind("notification:new", newHandler);
     };
-  }, [pusherKey]);
+  }, [pusherKey, add]);
 
   console.log("Notification", notifications);
   return (

@@ -9,9 +9,14 @@ interface ThemeContextType {
 export const ThemeContext = createContext<ThemeContextType>({});
 
 export const ThemeProvider = ({ children }: any) => {
-  const [theme, setTheme] = useState<ThemeType>(
-    () => (localStorage.getItem("theme") as ThemeType) || "lofi"
-  );
+  const [theme, setTheme] = useState<ThemeType>("lofi");
+
+  useEffect(() => {
+    const theme = (localStorage.getItem("theme") as ThemeType) || null;
+    if (theme) {
+      setTheme(theme);
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("theme", theme);

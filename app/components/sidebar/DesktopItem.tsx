@@ -32,7 +32,7 @@ const DesktopItem: FC<DesktopItemProps> = ({
     return (
       label === "Chat" && notifications?.length && notifications?.length > 0
     );
-  }, [notifications]);
+  }, [notifications, label]);
 
   return (
     <li onClick={handleClick}>

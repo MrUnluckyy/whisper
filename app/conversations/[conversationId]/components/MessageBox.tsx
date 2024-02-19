@@ -3,7 +3,6 @@
 import Avatar from "@/app/components/Avatar";
 import { FullMessageType } from "@/app/types";
 import { trimName } from "@/app/utils/trimName";
-import { Message } from "@prisma/client";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
@@ -23,15 +22,6 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
     .filter((user) => user.email !== data?.sender?.email)
     .map((user) => trimName(user?.name!))
     .join(", ");
-
-  const container = clsx("flex gap-3 p-4", isOwn && "justify-end");
-  const avatar = clsx(isOwn && "order-2");
-  const body = clsx("flex flex-col gap-2", isOwn && "items-end");
-  const message = clsx(
-    "text-sm w-fit overflow-hidden text-[black]",
-    isOwn ? "bg-primary" : "bg-base-300",
-    data.image ? "rounded-md p-0" : "rounded-full py-2 px-3"
-  );
 
   const handleOpenModal = (image: string) => {
     if (!image) return;

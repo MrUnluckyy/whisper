@@ -31,7 +31,7 @@ const ProfileDrawer: FC<ProfileDrawerProps> = ({ data }) => {
       return `${data.users.length} members`;
     }
     return isActive ? "Active" : "Offline";
-  }, [data]);
+  }, [data, isActive]);
 
   const infoTitle =
     "text-sm font-medium text-base-content opacity-40 sm:w-40 sm:flex-shrink-0";

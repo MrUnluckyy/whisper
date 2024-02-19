@@ -32,7 +32,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ id, modalRef }) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [conversationId, router]);
+  }, [conversationId, router, modalRef]);
 
   return (
     <dialog id={id} ref={modalRef} className="modal">
