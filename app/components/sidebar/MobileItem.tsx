@@ -12,7 +12,6 @@ interface MobileItemProps {
 }
 
 const MobileItem: FC<MobileItemProps> = ({
-  label,
   icon: Icon,
   href,
   onClick,
@@ -28,8 +27,8 @@ const MobileItem: FC<MobileItemProps> = ({
       onClick={handleClick}
       href={href}
       className={clsx(
-        "group flex gap-x-3 text-sm leading-6 font-semibold w-full justify-center p-4 text-neutral-content hover:text-base-content hover:bg-base-200",
-        active && "bg-base-200 text-base-content"
+        "group flex gap-x-3 text-sm leading-6 font-semibold w-full justify-center p-4 bg-neutral text-neutral-content/40 hover:text-neutral-content/80",
+        active && "text-neutral-content/100"
       )}
     >
       <Icon className="h-6 w-6" />

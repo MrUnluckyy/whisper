@@ -38,7 +38,7 @@ const Header: FC<HeaderProps> = ({ conversation }) => {
         className="drawer-toggle"
       />
       <ProfileDrawer data={conversation} />
-      <div className="w-full flex border-b-[1px] sm:px-4 py-3 px-4 lg:px-6 justify-between items-center shadow-sm">
+      <div className="w-full flex sm:px-4 py-3 px-4 lg:px-6 justify-between items-center border-b border-base-300">
         <div className="flex gap-3 items-center">
           <Link
             href={"/conversations"}

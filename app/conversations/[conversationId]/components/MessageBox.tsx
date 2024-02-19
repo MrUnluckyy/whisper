@@ -18,9 +18,9 @@ interface MessageBoxProps {
 
 const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
   const session = useSession();
-  const isOwn = session.data?.user?.email === data.sender.email;
+  const isOwn = session.data?.user?.email === data?.sender?.email;
   const seenList = (data.seen || [])
-    .filter((user) => user.email !== data.sender.email)
+    .filter((user) => user.email !== data?.sender?.email)
     .map((user) => trimName(user?.name!))
     .join(", ");
 
@@ -41,7 +41,49 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
 
   return (
     <>
-      <div className={container}>
+      <div
+        className={clsx("chat p-4 gap-2", isOwn ? "chat-end" : "chat-start")}
+      >
+        <Avatar user={data.sender} inChat />
+        <div className="chat-header">
+          <div className="flex gap-2 items-center">
+            <p>{data.sender.name}</p>
+            <time className="text-xs opacity-50">
+              {format(new Date(data.createdAt), "p")}
+            </time>
+          </div>
+        </div>
+
+        {data.image ? (
+          <>
+            <Image
+              src={data.image}
+              alt=""
+              height="288"
+              width="288"
+              className="object-cover cursor-pointer hover:scale-105 transition translate rounded-lg mt-2"
+              onClick={() => handleOpenModal(data.image!)}
+            />
+            <ImageModal image={data.image} />
+          </>
+        ) : (
+          <div
+            className={clsx(
+              "chat-bubble",
+              isOwn ? "chat-bubble-primary" : "chat-bubble-secondary"
+            )}
+          >
+            {data.body}
+          </div>
+        )}
+
+        <div className="chat-footer opacity-50">
+          {isLast && isOwn && seenList.length > 0 && (
+            <div className="text-xs font-light">{`Seen by ${seenList}`}</div>
+          )}
+        </div>
+      </div>
+      {/* <div className={container}>
         <div className={avatar}>
           <Avatar user={data.sender} />
         </div>
@@ -73,7 +115,7 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
             <div className="text-xs font-light">{`Seen by ${seenList}`}</div>
           )}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

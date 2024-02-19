@@ -9,7 +9,7 @@ const ThemeModal = () => {
     <>
       <li>
         <button
-          className="group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-neutral-content hover:text-base-content hover:bg-base-200"
+          className="group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold hover:text-base-content hover:bg-base-200"
           onClick={() => themeModalRef.current?.showModal()}
         >
           <HiPaintBrush />

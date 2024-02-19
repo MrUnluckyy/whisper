@@ -7,3 +7,9 @@ body,
 :root {
   height: 100%;
 }
+
+.avatar.online::before,
+.avatar.offline::before {
+  width: 20%;
+  height: 20%;
+}

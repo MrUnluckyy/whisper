@@ -74,6 +74,15 @@ export async function POST(request: Request) {
       });
     });
 
+    updatedConversation.users.map((user) => {
+      if (user.email !== currentUser.email) {
+        pusherServer.trigger(user.email!, "notification:new", {
+          id: conversationId,
+          messages: [lastMessage],
+        });
+      }
+    });
+
     return NextResponse.json(newMessage);
   } catch (error: any) {
     console.log(error, "ERROR_MESSAGES");
