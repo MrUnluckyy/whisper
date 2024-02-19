@@ -81,7 +81,7 @@ const ProfileDrawer: FC<ProfileDrawerProps> = ({ data }) => {
                   }}
                   className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75"
                 >
-                  <div className="w-10 h-10 bg-neutral-content rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 bg-primary text-primary-content rounded-full flex items-center justify-center">
                     <IoTrash size={20} />
                   </div>
                   <div className="text-sm font-light text-base-content">
