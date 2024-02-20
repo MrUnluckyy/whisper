@@ -57,6 +57,16 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       include: {
         sender: true,
         seen: true,
+        parent: {
+          include: {
+            sender: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
       data: {
         seen: {
