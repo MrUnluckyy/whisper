@@ -93,7 +93,7 @@ const ConversationList: FC<ConversationListProps> = ({
         )}
       >
         <div className="px-5">
-          <div className="flex justify-between mb-4 pt-4">
+          <div className="flex justify-between mb-4 pt-4 z-[70]">
             <div className="text-2xl font-bold">Messages</div>
             <CreateGroupModal users={users} />
           </div>

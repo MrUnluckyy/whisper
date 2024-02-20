@@ -14,7 +14,7 @@ const EmojiPicker: FC<EmojiPickerProps> = ({ onEmojiSelect }) => {
       <div tabIndex={0} role="button">
         <HiEmojiHappy size={30} />
       </div>
-      <div tabIndex={0} className="dropdown-content z-[1] menu">
+      <div tabIndex={0} className="dropdown-content z-[60] menu">
         <Picker data={data} onEmojiSelect={onEmojiSelect} theme={"auto"} />
       </div>
     </div>
