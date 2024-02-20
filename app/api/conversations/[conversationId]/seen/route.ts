@@ -24,6 +24,16 @@ export async function POST(request: Request, { params }: { params: IParams }) {
         messages: {
           include: {
             seen: true,
+            parent: {
+              include: {
+                sender: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
           },
         },
         users: true,

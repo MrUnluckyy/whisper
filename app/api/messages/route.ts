@@ -113,6 +113,16 @@ export async function POST(request: Request) {
         messages: {
           include: {
             seen: true,
+            parent: {
+              include: {
+                sender: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
           },
         },
       },
