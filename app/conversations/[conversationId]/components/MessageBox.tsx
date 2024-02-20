@@ -48,7 +48,7 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast, onReply }) => {
               src={data.image}
               alt=""
               className={clsx(
-                "object-cover rounded-lg mt-2 w-[288] h-[288] cursor-pointer hover:scale-105 transition translate"
+                "object-fit rounded-lg mt-2 w-[200px] h-[200px] cursor-pointer hover:scale-105 transition translate"
               )}
               onClick={() => handleOpenModal(data.image!)}
             />
@@ -58,24 +58,29 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast, onReply }) => {
           <>
             <div
               className={clsx(
-                "chat-bubble cursor-pointer hover:scale-[101%] transition translate min-w-[80px]",
+                "chat-bubble cursor-pointer hover:scale-[101%] transition translate min-w-[100px] p-1",
                 isOwn ? "chat-bubble-primary" : "chat-bubble-secondary"
               )}
               onClick={() => onReply(data)}
             >
-              <p className="text-end">
+              {data.parent && (
+                <div className="w-full bg-primary-content/20 px-2 py-1 rounded-box  border-l-4 border-secondary">
+                  <h4 className="text-sm">
+                    {data.parent?.senderId === data.senderId
+                      ? `You`
+                      : data.parent.sender.name}
+                  </h4>
+                  <p className="text-xs pb-1 truncate ... opacity-50">
+                    {data.parent?.body}
+                  </p>
+                </div>
+              )}
+              <div className="px-2">
+                <p>{data.body}</p>
                 <time className="text-xs opacity-50">
                   {format(new Date(data.createdAt), "p")}
                 </time>
-              </p>
-
-              {data.parent && (
-                <p className="text-xs pb-1 truncate ... opacity-50">
-                  <span>Replied to: </span>
-                  {data.parent?.body}
-                </p>
-              )}
-              <p>{data.body}</p>
+              </div>
             </div>
           </>
         )}

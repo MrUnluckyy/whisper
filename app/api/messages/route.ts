@@ -28,6 +28,7 @@ export async function POST(request: Request) {
           sender: {
             connect: {
               id: currentUser.id,
+              name: currentUser.name,
             },
           },
           seen: {
@@ -44,7 +45,16 @@ export async function POST(request: Request) {
         include: {
           seen: true,
           sender: true,
-          parent: true,
+          parent: {
+            include: {
+              sender: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
         },
       });
     } else {
@@ -60,6 +70,7 @@ export async function POST(request: Request) {
           sender: {
             connect: {
               id: currentUser.id,
+              name: currentUser.name,
             },
           },
           seen: {
@@ -71,6 +82,16 @@ export async function POST(request: Request) {
         include: {
           seen: true,
           sender: true,
+          parent: {
+            include: {
+              sender: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
         },
       });
     }

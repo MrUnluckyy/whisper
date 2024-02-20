@@ -67,8 +67,8 @@ const CreateGroupModal: FC<CreateGroupModalProps> = ({ users }) => {
         id="create-group-modal"
         className="modal-toggle"
       />
-      <div className="modal" role="dialog">
-        <div className="modal-box">
+      <div className="modal " role="dialog">
+        <div className="modal-box overflow-visible">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-12">
               <div className="border-b border-base-content pb-12">

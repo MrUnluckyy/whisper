@@ -11,6 +11,7 @@ import { Emoji, Skin } from "@emoji-mart/data";
 import { FullMessageType } from "@/app/types";
 import { FC } from "react";
 import { HiX } from "react-icons/hi";
+import GiphyBox from "./GiphyBox";
 
 interface FormProps {
   repliedTo?: FullMessageType | null;
@@ -51,6 +52,13 @@ const Form: FC<FormProps> = ({ repliedTo, onReplyReset }) => {
     });
   };
 
+  const handleUploadGif = (gif: string) => {
+    axios.post("/api/messages", {
+      image: gif,
+      conversationId,
+    });
+  };
+
   const handleAddEmoji = (emoji: Emoji & Skin) => {
     const message = getValues("message");
     setValue("message", message.concat(" ", emoji.native));
@@ -78,6 +86,7 @@ const Form: FC<FormProps> = ({ repliedTo, onReplyReset }) => {
           <HiPhoto size={30} />
         </CldUploadButton>
         <EmojiPicker onEmojiSelect={handleAddEmoji} />
+        <GiphyBox onSelected={(gif) => handleUploadGif(gif)} />
 
         <form
           onSubmit={handleSubmit(onSubmit)}

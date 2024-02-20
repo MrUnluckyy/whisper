@@ -1,19 +1,18 @@
 "use client";
-import { GifsResult } from "@giphy/js-fetch-api";
-
 import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { HiGif } from "react-icons/hi2";
 import axios from "axios";
 import { HiSearch } from "react-icons/hi";
 import { RiEmojiStickerFill } from "react-icons/ri";
+import { TenorGifs } from "@/app/types";
 
 interface GiphyBoxProps {
   type?: "gifs" | "stickers";
   onSelected: (item: string) => void;
 }
-
+// FIND TENOR API TYPES
 const GiphyBox: FC<GiphyBoxProps> = ({ type = "gifs", onSelected }) => {
-  const [gifs, setGifs] = useState<GifsResult["data"]>([]);
+  const [gifs, setGifs] = useState<TenorGifs[]>([]);
   const [searchKey, setSearchKey] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -26,37 +25,40 @@ const GiphyBox: FC<GiphyBoxProps> = ({ type = "gifs", onSelected }) => {
   };
 
   useEffect(() => {
-    if (searchKey.length === 0) {
+    if (searchKey?.length === 0) {
       axios
-        .get(`https://api.giphy.com/v1/${type}/trending`, {
+        .get("https://tenor.googleapis.com/v2/featured", {
           params: {
-            api_key: process.env.NEXT_PUBLIC_GIPHY_KEY,
+            key: process.env.NEXT_PUBLIC_TENOR_KEY,
             limit: 5,
           },
         })
-        .then(({ data }: { data: GifsResult }) => {
-          setGifs(data.data);
+        .then((data) => {
+          console.log(data);
+
+          setGifs(data.data.results);
         })
         .catch((err: any) => {
           console.log("ERROR", err);
         });
     }
-  }, [searchKey.length, type]);
+  }, [searchKey?.length]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchKey(e.target.value);
-    if (e.target.value.length > 1) {
+    if (e.target?.value?.length) {
       axios
-        .get(`https://api.giphy.com/v1/${type}/search`, {
+        .get(`https://tenor.googleapis.com/v2/search`, {
           params: {
-            api_key: process.env.NEXT_PUBLIC_GIPHY_KEY,
+            key: process.env.NEXT_PUBLIC_TENOR_KEY,
             q: e.target.value,
             limit: 5,
           },
         })
         .then((data) => {
-          if (data.data.data.length) {
-            setGifs(data.data.data);
+          if (data.data.results.length) {
+            console.log("search", data.data.results);
+            setGifs(data.data.results);
           } else {
             setGifs([]);
           }
@@ -66,6 +68,8 @@ const GiphyBox: FC<GiphyBoxProps> = ({ type = "gifs", onSelected }) => {
         });
     }
   };
+
+  console.log(gifs);
 
   return (
     <div className="dropdown dropdown-top">
@@ -90,17 +94,16 @@ const GiphyBox: FC<GiphyBoxProps> = ({ type = "gifs", onSelected }) => {
               onChange={handleChange}
             />
           </label>
-
           <div className="flex flex-col">
             {gifs?.map((gif) => (
               <img
-                key={gif.content_url}
-                id={gif.url}
-                src={gif.images.fixed_width.url}
-                alt={gif.alt_text || "gif"}
+                key={gif.id}
+                id={gif.id}
+                src={gif.media_formats.gif.url}
+                alt={gif.title || "gif"}
                 className="cursor-pointer"
                 onClick={() => {
-                  handleSelect(gif.images.fixed_width.url);
+                  handleSelect(gif.media_formats.gif.url);
                 }}
               />
             ))}

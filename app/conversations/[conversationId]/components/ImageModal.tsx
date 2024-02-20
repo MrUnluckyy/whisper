@@ -10,8 +10,8 @@ const ImageModal: FC<ImageModalProps> = ({ image }) => {
     <>
       <dialog id={image} className="modal">
         <div className="modal-box">
-          <div className="w-80 h-80">
-            <img src={image} alt="" className="object-cover" />
+          <div className="text-center">
+            <img src={image} alt="" className="object-cover w-full" />
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="btn btn-sm btn-circle absolute right-2 top-2">
