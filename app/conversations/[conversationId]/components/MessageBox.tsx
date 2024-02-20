@@ -36,7 +36,7 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast, onReply }) => {
     <>
       <div
         className={clsx(
-          "chat p-4 gap-2 group/item",
+          "chat px-4 gap-2 group/item",
           isOwn ? "chat-end" : "chat-start"
         )}
       >

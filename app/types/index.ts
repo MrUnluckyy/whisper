@@ -20,7 +20,7 @@ export type ThemeType =
   | "dim"
   | "night"
   | "coffee"
-  | "cmyk"
+  | "valentine"
   | "cyberpunk";
 
 export type TenorGifs = {

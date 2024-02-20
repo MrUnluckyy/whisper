@@ -11,7 +11,7 @@ function Theme() {
     "dim",
     "night",
     "coffee",
-    "cmyk",
+    "valentine",
     "cyberpunk",
   ];
   const handleThemeChagne = (event: ChangeEvent<HTMLInputElement>) => {
