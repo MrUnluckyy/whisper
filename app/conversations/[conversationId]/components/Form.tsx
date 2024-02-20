@@ -65,7 +65,7 @@ const Form: FC<FormProps> = ({ repliedTo, onReplyReset }) => {
   };
 
   return (
-    <div className="w-full border-t border-base-300">
+    <div className="w-full border-t border-base-300 pb-4">
       {repliedTo && (
         <div className="px-4 pt-4 text-sm flex justify-between">
           <div className="">

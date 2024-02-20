@@ -56,7 +56,7 @@ const CreateGroupModal: FC<CreateGroupModalProps> = ({ users }) => {
     <>
       <label
         htmlFor="create-group-modal"
-        className="rounded-full p-2 bg-neutral-content text-neutral cursor-pointer hover:opacity-75 transition"
+        className="rounded-full p-2 bg-primary text-primary-content cursor-pointer hover:opacity-75 transition"
       >
         <MdOutlineGroupAdd size={20} />
       </label>
@@ -72,10 +72,10 @@ const CreateGroupModal: FC<CreateGroupModalProps> = ({ users }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-12">
               <div className="border-b border-base-content pb-12">
-                <h2 className="text-base font-semibold leading-7 text-neutral-content">
+                <h2 className="text-base font-semibold leading-7">
                   Create a group chat
                 </h2>
-                <p className=" mt-1 text-sm leading-6 text-neutral-content opacity-70">
+                <p className=" mt-1 text-sm leading-6 opacity-70">
                   Create a chat with more than 2 people.
                 </p>
                 <div className="mt-10 flex flex-col gap-y-8">
