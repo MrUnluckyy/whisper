@@ -8,6 +8,7 @@ import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
 import useNotificationList from "@/app/hooks/useNotificationList";
 import { useSession } from "next-auth/react";
+import Form from "./Form";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
@@ -15,15 +16,16 @@ interface BodyProps {
 const Body: FC<BodyProps> = ({ initialMessages }) => {
   const session = useSession();
   const [messages, setMessages] = useState(initialMessages);
+  const [replyTo, setReplyTo] = useState<FullMessageType | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const { remove, set, notifications } = useNotificationList();
   const { conversationId } = useConversation();
 
+  console.log(messages);
+
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
-
-  console.log("wtf_1", notifications);
 
   useEffect(() => {
     pusherClient.subscribe(conversationId);
@@ -65,6 +67,7 @@ const Body: FC<BodyProps> = ({ initialMessages }) => {
           return currentMessage;
         })
       );
+      remove(newMessage.id);
     };
 
     pusherClient.bind("messages:new", messageHandler);
@@ -78,16 +81,20 @@ const Body: FC<BodyProps> = ({ initialMessages }) => {
   }, [conversationId, messages, remove]);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-base-100">
-      {messages.map((message, i) => (
-        <MessageBox
-          key={message.id}
-          data={message}
-          isLast={i === messages.length - 1}
-        />
-      ))}
-      <div ref={bottomRef} className="pt-24" />
-    </div>
+    <>
+      <div className="flex-1 overflow-y-auto bg-base-100">
+        {messages.map((message, i) => (
+          <MessageBox
+            key={message.id}
+            data={message}
+            isLast={i === messages.length - 1}
+            onReply={(message) => setReplyTo(message)}
+          />
+        ))}
+        <div ref={bottomRef} className="pt-24" />
+      </div>
+      <Form repliedTo={replyTo} onReplyReset={() => setReplyTo(null)} />
+    </>
   );
 };
 

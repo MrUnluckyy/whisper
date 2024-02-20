@@ -9,13 +9,16 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { FC } from "react";
 import ImageModal from "./ImageModal";
+import { HiReply } from "react-icons/hi";
+import MessageOptions from "./MessageOptions";
 
 interface MessageBoxProps {
   data: FullMessageType;
   isLast?: boolean;
+  onReply: (message: FullMessageType) => void;
 }
 
-const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
+const MessageBox: FC<MessageBoxProps> = ({ data, isLast, onReply }) => {
   const session = useSession();
   const isOwn = session.data?.user?.email === data?.sender?.email;
   const seenList = (data.seen || [])
@@ -24,26 +27,20 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
     .join(", ");
 
   const handleOpenModal = (image: string) => {
-    if (!image || isGif) return;
+    if (!image) return;
     const modalId = document.getElementById(image) as HTMLDialogElement;
     modalId.showModal();
   };
 
-  const isGif = data.image && data.image.indexOf("giphy.com") > 0;
   return (
     <>
       <div
-        className={clsx("chat p-4 gap-2", isOwn ? "chat-end" : "chat-start")}
+        className={clsx(
+          "chat p-4 gap-2 group/item",
+          isOwn ? "chat-end" : "chat-start"
+        )}
       >
         <Avatar user={data.sender} inChat />
-        <div className="chat-header">
-          <div className="flex gap-2 items-center">
-            <p>{data.sender.name}</p>
-            <time className="text-xs opacity-50">
-              {format(new Date(data.createdAt), "p")}
-            </time>
-          </div>
-        </div>
 
         {data.image ? (
           <>
@@ -51,22 +48,36 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
               src={data.image}
               alt=""
               className={clsx(
-                "object-cover rounded-lg mt-2 w-[288] h-[288]",
-                !isGif && "cursor-pointer hover:scale-105 transition translate"
+                "object-cover rounded-lg mt-2 w-[288] h-[288] cursor-pointer hover:scale-105 transition translate"
               )}
               onClick={() => handleOpenModal(data.image!)}
             />
             <ImageModal image={data.image} />
           </>
         ) : (
-          <div
-            className={clsx(
-              "chat-bubble",
-              isOwn ? "chat-bubble-primary" : "chat-bubble-secondary"
-            )}
-          >
-            {data.body}
-          </div>
+          <>
+            <div
+              className={clsx(
+                "chat-bubble cursor-pointer hover:scale-[101%] transition translate min-w-[80px]",
+                isOwn ? "chat-bubble-primary" : "chat-bubble-secondary"
+              )}
+              onClick={() => onReply(data)}
+            >
+              <p className="text-end">
+                <time className="text-xs opacity-50">
+                  {format(new Date(data.createdAt), "p")}
+                </time>
+              </p>
+
+              {data.parent && (
+                <p className="text-xs pb-1 truncate ... opacity-50">
+                  <span>Replied to: </span>
+                  {data.parent?.body}
+                </p>
+              )}
+              <p>{data.body}</p>
+            </div>
+          </>
         )}
 
         <div className="chat-footer opacity-50">
@@ -75,39 +86,6 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
           )}
         </div>
       </div>
-      {/* <div className={container}>
-        <div className={avatar}>
-          <Avatar user={data.sender} />
-        </div>
-        <div className={body}>
-          <div className="flex items-center gap-1">
-            <div className="text-sm">{data.sender.name}</div>
-            <div className="text-xs text-neutral-content">
-              {format(new Date(data.createdAt), "p")}
-            </div>
-          </div>
-          <div className={message}>
-            {data.image ? (
-              <>
-                <Image
-                  src={data.image}
-                  alt=""
-                  height="288"
-                  width="288"
-                  className="object-cover cursor-pointer hover:scale-110 transition translate"
-                  onClick={() => handleOpenModal(data.image!)}
-                />
-                <ImageModal image={data.image} />
-              </>
-            ) : (
-              <div>{data.body}</div>
-            )}
-          </div>
-          {isLast && isOwn && seenList.length > 0 && (
-            <div className="text-xs font-light">{`Seen by ${seenList}`}</div>
-          )}
-        </div>
-      </div> */}
     </>
   );
 };

@@ -28,7 +28,7 @@ function Theme() {
             key={themeOption}
             type="radio"
             name="theme-buttons"
-            className="btn theme-controller join-item capitalize"
+            className="btn btn-sm lg:btn-md theme-controller join-item capitalize"
             aria-label={themeOption}
             value={themeOption}
             checked={theme === themeOption}
